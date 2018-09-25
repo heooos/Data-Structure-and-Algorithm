@@ -42,28 +42,28 @@ int get_SeqList(seqList*,int);
 
 int main(int argc, const char * argv[]) {
     
-    seqList *L = NULL;
-    init_SeqList(L);
-    insert_SeqList(L, 1, 11);
-    insert_SeqList(L, 2, 22);
-    insert_SeqList(L, 3, 33);
-    insert_SeqList(L, 4, 48);
-    insert_SeqList(L, 4, 41);
-    insert_SeqList(L, 4, 42);
-    insert_SeqList(L, 4, 43);
-    insert_SeqList(L, 4, 555);
-    print_SeqList(L);
-    delete_SeqList(L, 5);
+    seqList L;
+    init_SeqList(&L);
+    insert_SeqList(&L, 1, 11);
+    insert_SeqList(&L, 2, 22);
+    insert_SeqList(&L, 3, 33);
+    insert_SeqList(&L, 4, 48);
+    insert_SeqList(&L, 4, 41);
+    insert_SeqList(&L, 4, 42);
+    insert_SeqList(&L, 4, 43);
+    insert_SeqList(&L, 4, 555);
+    print_SeqList(&L);
+    delete_SeqList(&L, 5);
     printf("删除后：\n");
-    print_SeqList(L);
+    print_SeqList(&L);
     printf("倒置：\n");
-    reverse_SeqList(L);
-    print_SeqList(L);
+    reverse_SeqList(&L);
+    print_SeqList(&L);
 //    return 0;
     printf("\n");
     int m,n,index,sul;
     scanf("%d",&m);
-    index = location_SeqList(L,m);
+    index = location_SeqList(&L,m);
     if (index == ERR) {
         printf("表中不含有此数。\n");
     }else{
@@ -71,7 +71,7 @@ int main(int argc, const char * argv[]) {
     }
     printf("输入要获取的节点位置:\n");
     scanf("%d",&n);
-    sul = get_SeqList(L, n);
+    sul = get_SeqList(&L, n);
     if(sul == ERR){
         
     }else{
