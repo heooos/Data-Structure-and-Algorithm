@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "stdbool.h"
 
 #define Head 1  //头插法
 #define Tail 2  //尾插法
@@ -22,18 +23,33 @@ typedef struct node{
     struct node *next;
 }LNode,*LinkList;
 
+void Print_LinkList(LinkList);
 LinkList Creat_LinkList(int);
 int Length_LinkList(LinkList);
-LinkList Get_LinkList(LinkList,int);
-LNode* Locate_LinkList(LinkList,ElemeType);
+LinkList Get_LinkList(LinkList,int);  //位置索引
+LNode* Locate_LinkList(LinkList,ElemeType);  //按值查找
+bool Insert_LinkList(LinkList,int ,ElemeType);
 
 
 int main(int argc, const char * argv[]) {
     LinkList L =  Creat_LinkList(Tail);
-    printf("长度为%d\n",Length_LinkList(L));
-    printf("查询结点元素为%d\n",Get_LinkList(L, 2)->data);
+    Print_LinkList(L);
+    Insert_LinkList(L,10,999);
+    Print_LinkList(L);
+//    printf("长度为%d\n",Length_LinkList(L));
+//    printf("查询结点元素为%d\n",Get_LinkList(L, 2)->data);
     return 0;
 }
+
+void Print_LinkList(LinkList L){
+    LNode *p = L;
+    while (p->next != NULL) {
+        p = p->next;
+        printf("%d ",p->data);
+    }
+    printf("\n");
+}
+
 
 LinkList Creat_LinkList(int type){
     //头插 & 尾插
@@ -115,4 +131,24 @@ LNode* Locate_LinkList(LinkList L,ElemeType E){
         }
     }
     return NULL;
+}
+/**
+ 插入到index结点上  即插入到index-1 与 index之间
+ */
+bool Insert_LinkList(LinkList L,int index,ElemeType E){
+    LNode * p = L;
+    int i = 0;
+    while (p->next != NULL && i<index-1) {
+        p = p->next;
+        i++;
+    }
+    if (p->next == NULL) {
+        printf("位置错误\n");
+        return false;
+    }
+    LNode *s = (LinkList)malloc(sizeof(LNode));
+    s->data = E;
+    s->next = p->next;
+    p->next = s;
+    return true;
 }
