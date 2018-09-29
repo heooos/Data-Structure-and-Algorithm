@@ -23,16 +23,20 @@ typedef struct node{
 }LNode,*LinkList;
 
 LinkList Creat_LinkList(int);
-
+int Length_LinkList(LinkList);
+LinkList Get_LinkList(LinkList,int);
+LNode* Locate_LinkList(LinkList,ElemeType);
 
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    
+    LinkList L =  Creat_LinkList(Tail);
+    printf("长度为%d\n",Length_LinkList(L));
+    printf("查询结点元素为%d\n",Get_LinkList(L, 2)->data);
     return 0;
 }
 
 LinkList Creat_LinkList(int type){
+    //头插 & 尾插
     switch (type) {
         case Head:{
             LinkList H = (LinkList)malloc(sizeof(LNode));
@@ -43,7 +47,7 @@ LinkList Creat_LinkList(int type){
             while (x!=-1) {
                 s = (LinkList)malloc(sizeof(LinkList));
                 s->data = x;
-                s->next = NULL;
+                s->next = H->next;
                 H->next = s;
                 scanf("%d",&x);
             }
@@ -51,26 +55,64 @@ LinkList Creat_LinkList(int type){
             return H;
         }
         case Tail:{
-            LinkList R = (LinkList)malloc(sizeof(LNode));
-            R->next = NULL;
-            LNode *s;
+            LinkList H = (LinkList)malloc(sizeof(LNode));
+            H->next = NULL;
+            LNode *s,*r = H;
             int x;
             scanf("%d",&x);
             while (x!=-1) {
                 s = (LinkList)malloc(sizeof(LinkList));
                 s->data = x;
                 
-                R->next = s;
-                s->next = NULL;
-                R = s; //新尾结点
+                s->next = r->next;
+                r->next = s;
+                r = s; //新尾结点
                 scanf("%d",&x);
             }
-            return R;
+            return H;
         }
         default:
             printf("输入类型错误。");
             exit(1);
             break;
+    }
+    return NULL;
+}
+
+int Length_LinkList(LinkList L){
+    LNode * p = L;
+    int i = 0;
+    while (p->next != NULL) {
+        p = p->next;
+        i++;
+    }
+    return i;
+}
+
+LinkList Get_LinkList(LinkList L,int index){
+    LNode * p = L;
+    int i = 0;
+    while (p->next != NULL && i<index) {
+        p=p->next;i++;
+    }
+    if (i == index) {
+        return p;
+    }else{
+        return NULL;
+    }
+}
+
+
+LNode* Locate_LinkList(LinkList L,ElemeType E){
+    LNode * p = L;
+    int m;
+    while (p->next != NULL) {
+        p = p->next;
+        m = p->data;
+        
+        if (m == E) {
+            return p;
+        }
     }
     return NULL;
 }
