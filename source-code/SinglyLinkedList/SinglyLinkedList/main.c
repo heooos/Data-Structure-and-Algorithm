@@ -26,15 +26,17 @@ typedef struct node{
 void Print_LinkList(LinkList);
 LinkList Creat_LinkList(int);
 int Length_LinkList(LinkList);
-LinkList Get_LinkList(LinkList,int);  //位置索引
+LNode* Get_LinkList(LinkList,int);  //位置索引
 LNode* Locate_LinkList(LinkList,ElemeType);  //按值查找
 bool Insert_LinkList(LinkList,int ,ElemeType);
+bool Delete_LinkList(LinkList,int);  //删除索引位置的结点
 
 
 int main(int argc, const char * argv[]) {
-    LinkList L =  Creat_LinkList(Tail);
+    LinkList L =  Creat_LinkList(Head);
     Print_LinkList(L);
-    Insert_LinkList(L,10,999);
+    Delete_LinkList(L,2);
+//    Insert_LinkList(L,10,999);
     Print_LinkList(L);
 //    printf("长度为%d\n",Length_LinkList(L));
 //    printf("查询结点元素为%d\n",Get_LinkList(L, 2)->data);
@@ -67,7 +69,6 @@ LinkList Creat_LinkList(int type){
                 H->next = s;
                 scanf("%d",&x);
             }
-            
             return H;
         }
         case Tail:{
@@ -150,5 +151,25 @@ bool Insert_LinkList(LinkList L,int index,ElemeType E){
     s->data = E;
     s->next = p->next;
     p->next = s;
+    return true;
+}
+
+bool Delete_LinkList(LinkList L,int index){
+    LNode * p = L;
+    int i = 0;
+    while (p->next != NULL && i< index-1) {
+        p = p->next;
+        i++;
+    }
+    
+    if (p->next == NULL) {
+        printf("位置错误\n");
+        return false;
+    }
+    
+    LNode * m = p->next ;
+    p->next = m->next;
+    free(m);
+    
     return true;
 }
