@@ -10,7 +10,8 @@
 
 
 void char_store(){
-	while(ch != EOF && ch != '\n'){
+	while(ch != EOF){
+		while(ch != EOF && ch != '\n'){
 		switch(ch){
 			case '#':
 				Pop(S,c);break;
@@ -20,7 +21,13 @@ void char_store(){
 			
 			default:
 				Push(S,ch);break;
+			}
+			scanf('%c',ch); //终端读入
 		}
-		scanf('%c',ch); //终端读入
+		//将从栈底到栈顶的字符传送到调用过程的数据区；
+		ClearStack(S); //重置栈
+		if (ch != EOF){
+			scanf('%c',ch);
+		}
 	}
 }
